@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b1rwfrow3kp27"]
+
+[ext_resource type="Script" uid="uid://c4pgreucw3v83" path="res://random_wikipedia_image.gd" id="1_vmu1j"]
+
+[node name="Control" type="VBoxContainer" unique_id=1267503381]
+custom_maximum_size = Vector2(500, -1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("1_vmu1j")
+
+[node name="Image" type="TextureRect" parent="." unique_id=1393790302]
+layout_mode = 2
+expand_mode = 5
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="." unique_id=1027384790]
+layout_mode = 2
+size_flags_horizontal = 4
+autowrap_mode = 3
+
+[node name="PageRequests" type="HTTPRequest" parent="." unique_id=1981434637]
+timeout = 5.0
+
+[node name="ImageRequests" type="HTTPRequest" parent="." unique_id=927470860]
