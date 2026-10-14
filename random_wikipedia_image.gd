@@ -100,7 +100,7 @@ func _http_request_completed(result: int, response_code: int, headers: PackedStr
 		var image_url: String = page_data.get("original").get("source", "").split("?").get(0)
 		var caption: String = ""
 		if not extract.is_empty():
-			caption = extract.split(".").get(0) + "."
+			caption = extract.split(". ").get(0) + "."
 		else:
 			caption = "image from article %s." % title
 		
@@ -152,6 +152,8 @@ func _image_request_completed(result: int, response_code: int, headers: PackedSt
 		return
 	
 	image_display.texture = ImageTexture.create_from_image(request_image)
+	image_display.custom_maximum_size = image_display.texture.get_size()
+	image_display.force_update_transform()
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_accept"):
