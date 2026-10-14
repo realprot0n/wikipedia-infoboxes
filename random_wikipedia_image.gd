@@ -46,6 +46,14 @@ func construct_query_string(
 	
 	return url + "?" + query_string
 
+func create_caption(original: String, minimum_length: int = 150) -> String:
+	var new_caption: String = ""
+	var original_sentences: Array = Array(original.split(". "))
+	while (new_caption.length() < minimum_length) and (len(original_sentences) > 0):
+		new_caption += original_sentences.pop_front() + ". "
+	
+	return new_caption
+
 func set_random_image() -> void:
 	var err: Error = page_requests.request(
 		construct_query_string(api_url),
@@ -100,7 +108,7 @@ func _http_request_completed(result: int, response_code: int, headers: PackedStr
 		var image_url: String = page_data.get("original").get("source", "").split("?").get(0)
 		var caption: String = ""
 		if not extract.is_empty():
-			caption = extract.split(". ").get(0) + "."
+			caption = create_caption(extract)
 		else:
 			caption = "image from article %s." % title
 		

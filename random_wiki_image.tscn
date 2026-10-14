@@ -25,6 +25,8 @@ stretch_mode = 4
 [node name="Label" type="Label" parent="Control" unique_id=1027384790]
 layout_mode = 2
 size_flags_horizontal = 4
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="PageRequests" type="HTTPRequest" parent="Control" unique_id=1981434637]
