@@ -1,35 +1,69 @@
 [gd_scene format=3 uid="uid://b1rwfrow3kp27"]
 
 [ext_resource type="Script" uid="uid://c4pgreucw3v83" path="res://random_wikipedia_image.gd" id="1_vmu1j"]
+[ext_resource type="Texture2D" uid="uid://c5bt2grun5s66" path="res://holder.png" id="2_oor62"]
 
-[node name="CenterContainer" type="CenterContainer" unique_id=166097218]
+[sub_resource type="Theme" id="Theme_oor62"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oor62"]
+bg_color = Color(0.972549, 0.9764706, 0.98039216, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.8980392, 0.90588236, 0.91764706, 1)
+
+[node name="CenterContainer" type="CenterContainer" unique_id=462457964]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Control" type="VBoxContainer" parent="." unique_id=1267503381]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=482263972]
+z_index = -10
+layout_mode = 2
+offset_transform_position_ratio = Vector2(0.5, 0.5)
+theme = SubResource("Theme_oor62")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="PanelContainer" parent="MarginContainer" unique_id=1141334995]
+z_index = -10
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oor62")
+
+[node name="Control" type="VBoxContainer" parent="MarginContainer" unique_id=1267503381]
 custom_maximum_size = Vector2(500, -1)
 layout_mode = 2
+size_flags_horizontal = 4
 alignment = 1
 script = ExtResource("1_vmu1j")
+placeholder_image = ExtResource("2_oor62")
 
-[node name="Image" type="TextureRect" parent="Control" unique_id=1393790302]
-custom_minimum_size = Vector2(300, 300)
-layout_mode = 2
-size_flags_vertical = 4
-expand_mode = 1
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="Control" unique_id=1027384790]
+[node name="Image" type="TextureRect" parent="MarginContainer/Control" unique_id=1393790302]
+custom_minimum_size = Vector2(100, 100)
+custom_maximum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch_mode = 5
+
+[node name="Label" type="RichTextLabel" parent="MarginContainer/Control" unique_id=85548089]
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_vertical = 3
+offset_transform_enabled = true
+bbcode_enabled = true
+fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 3
 
-[node name="PageRequests" type="HTTPRequest" parent="Control" unique_id=1981434637]
+[node name="PageRequests" type="HTTPRequest" parent="MarginContainer/Control" unique_id=1981434637]
 timeout = 5.0
 
-[node name="ImageRequests" type="HTTPRequest" parent="Control" unique_id=927470860]
+[node name="ImageRequests" type="HTTPRequest" parent="MarginContainer/Control" unique_id=927470860]

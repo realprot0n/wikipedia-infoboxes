@@ -23,12 +23,13 @@ const custom_headers: PackedStringArray = [
 
 @onready var page_requests: HTTPRequest = $PageRequests
 @onready var image_requests: HTTPRequest = $ImageRequests
-@onready var caption_label: Label = $Label
+@onready var caption_label: RichTextLabel = $Label
 @onready var image_display: TextureRect = $Image
 
 var image_request_url: String = ""
 
 @export var retry_interval: float = 1.5
+@export var placeholder_image: Texture2D
 
 func _ready() -> void:
 	page_requests.request_completed.connect(_http_request_completed)
@@ -119,12 +120,13 @@ func _http_request_completed(result: int, response_code: int, headers: PackedStr
 		_set_visuals(image_url, caption)
 
 func _set_visuals(image_url: String, caption: String) -> void:
+	image_display.texture = placeholder_image
 	image_requests.request(
 		image_url,
 		custom_headers,
 		HTTPClient.METHOD_GET
 	)
-	caption_label.set_text(caption)
+	caption_label.set_text("[color=black]" + caption + "[/color]")
 
 func _image_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	if response_code == 429:
@@ -157,10 +159,11 @@ func _image_request_completed(result: int, response_code: int, headers: PackedSt
 	
 	if load_error != OK:
 		push_error("gulp; image error %s" % load_error)
+		image_display.texture = placeholder_image
 		return
 	
 	image_display.texture = ImageTexture.create_from_image(request_image)
-	image_display.custom_maximum_size = image_display.texture.get_size()
+	#image_display.custom_maximum_size = image_display.texture.get_size()
 	image_display.force_update_transform()
 
 func _process(delta: float) -> void:
